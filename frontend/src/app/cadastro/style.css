@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+:root {
+    --primary-purple: #6c5ce7;
+    --accent-purple: #a29bfe;
+    --deep-bg: #0f0c29;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-main: #ffffff;
+    --text-dim: #b2bec3;
+    --radius: 24px;
+}
+
+/* Reset essencial para ocupar a tela toda */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--deep-bg);
+    color: var(--text-main);
+    min-height: 100vh;
+    margin: 0; /* Remove margens padrão */
+    padding: 0; /* Remove padding padrão */
+    overflow-x: hidden;
+}
+
+/* --- LAYOUT TELA DIVIDIDA --- */
+.split-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100vw; /* Força a largura total da viewport */
+}
+
+.form-section {
+    flex: 1; /* Ocupa metade da tela */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px; /* Aumentado para dar respiro em telas grandes */
+    background: radial-gradient(circle at center, #1a164d 0%, #0f0c29 100%);
+}
+
+.image-section {
+    flex: 1.2; /* Ocupa um pouco mais que a metade */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Overlay para a imagem não brigar com o formulário */
+.image-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #0f0c29, transparent);
+}
+
+/* --- COMPONENTES DE FORMULÁRIO --- */
+.glass-form {
+    width: 100%;
+    max-width: 400px; /* Limita a largura interna para o formulário não ficar "esticado" demais */
+    z-index: 1;
+}
+
+.input-group {
+    margin-bottom: 22px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--accent-purple);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.input-group input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    padding: 18px;
+    border-radius: 16px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-purple);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
+}
+
+/* --- BOTÕES --- */
+.btn-primary {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    border: none;
+    border-radius: 16px;
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.4s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(108, 92, 231, 0.4);
+}
+
+.text-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 2px;
+}
+
+/* Responsividade básica para celulares */
+@media (max-width: 768px) {
+    .image-section {
+        display: none; /* Esconde a imagem em telas pequenas para focar no login */
+    }
+    .form-section {
+        flex: 1;
+    }
+}

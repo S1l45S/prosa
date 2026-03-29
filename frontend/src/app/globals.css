@@ -1,216 +1,169 @@
-/* =================================
-   ESTILOS GERAIS E FUNDO
-   ================================= */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+:root {
+    --primary-purple: #6c5ce7;
+    --accent-purple: #a29bfe;
+    --deep-bg: #0f0c29;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-main: #ffffff;
+    --text-dim: #b2bec3;
+    --radius: 24px;
+    --card-gradient: radial-gradient(circle at center, #1a164d 0%, #0f0c29 100%);
+}
+
+* { box-sizing: border-box; }
+
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #37334f; /* Cor de fundo escura caso a imagem falhe */
-    color: #E1E1E6;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--deep-bg);
+    color: var(--text-main);
+    min-height: 100vh;
     margin: 0;
-    padding: 20px;
     display: flex;
     justify-content: center;
-    align-items: center; /* Centraliza o conteúdo verticalmente */
-    min-height: 100vh;
+    align-items: center;
+    overflow-x: hidden;
 }
 
-/* =================================
-   CONTAINER PRINCIPAL
-   ================================= */
+/* --- CONTAINER PRINCIPAL --- */
 .container {
-    background: transparent;
     width: 100%;
-    max-width: 600px;
-    padding: 0;
-    color: #E1E1E6;
+    max-width: 800px;
+    padding: 40px;
+    background: var(--card-gradient);
+    border-radius: var(--radius);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    z-index: 1;
 }
 
-/* =================================
-   TÍTULOS
-   ================================= */
+/* --- TÍTULOS --- */
 h1 {
-    color: #FFFFFF;
-    font-size: 40px;
-    font-weight: bold;
-    letter-spacing: 8px;
-    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+    text-align: center;
+    background: linear-gradient(135deg, #fff 0%, var(--accent-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 40px;
-    text-align: center; /* Títulos sempre centralizados */
-    white-space: nowrap;
 }
 
-/* =================================
-   BOTÕES DA PÁGINA INICIAL
-   ================================= */
+/* --- BOTÕES HOME --- */
 .botoes-home {
     display: flex;
-    flex-direction: column; /* Empilha os botões */
+    flex-direction: column; /* Empilha para dar destaque */
     align-items: center;
-    gap: 20px; /* Espaço entre os botões */
+    gap: 24px;
+    width: 100%;
+    margin-top: 20px;
 }
 
 .botoes-home a {
     width: 100%;
-    max-width: 300px; /* Largura máxima dos botões */
+    max-width: 500px; /* Aumentamos de 200px/300px para 500px */
     text-decoration: none;
+    transition: transform 0.3s ease;
 }
 
 .botoes-home button {
-    background-color: #282336;
-    color: #E1E1E6;
-    border: 1px solid #3A334F;
-    border-radius: 8px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    padding: 35px; /* Botão mais "robusto" */
+    border-radius: var(--radius);
+    font-size: 1.4rem; /* Fonte levemente maior para acompanhar a largura */
+    font-weight: 800;
     cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 20px 30px;
-    width: 100%;
-    transition: all 0.3s ease;
+    width: 100%; /* Ocupa todo o espaço do 'a' (500px) */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
 }
 
 .botoes-home button:hover {
-    background-color: #8257E6; /* Roxo vibrante no hover */
-    color: #FFFFFF;
-    border-color: #8257E6;
+    background: var(--primary-purple);
+    transform: scale(1.05); /* Efeito de leve expansão */
+    box-shadow: 0 20px 40px rgba(108, 92, 231, 0.4);
+    border-color: var(--accent-purple);
 }
 
-/* =================================
-   FORMULÁRIO (Páginas de Lista)
-   ================================= */
-form {
-    background: #1E192B;
-    border-radius: 8px;
-    padding: 20px;
+/* Responsividade: Em telas muito pequenas, ele se ajusta automaticamente */
+@media (max-width: 600px) {
+    .botoes-home a {
+        max-width: 100%;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+}
+
+/* --- FORMULÁRIO DE INDICAÇÃO --- */
+.form-indicacao {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 30px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    align-items: center;
+    background: var(--glass-bg);
+    padding: 10px;
+    border-radius: 18px;
+    border: 1px solid var(--glass-border);
 }
 
-form input,
-form select {
-    width: 100%;
-    padding: 12px 0;
+.form-indicacao input {
+    flex: 1;
     background: transparent;
     border: none;
-    font-size: 16px;
-    color: #E1E1E6;
+    padding: 15px;
+    color: white;
+    font-family: inherit;
     outline: none;
 }
 
-form input::placeholder {
-    color: #7C7C8A;
-}
-
-form select {
-    width: auto;
-}
-
-form button {
-    background-color: #8257E6; /* Roxo vibrante */
+.form-indicacao button {
+    background: var(--primary-purple);
     color: white;
     border: none;
-    border-radius: 6px;
-    padding: 10px 20px;
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-weight: 800;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: 0.3s;
 }
 
-form button:hover {
-    background-color: #633BBC;
+.form-indicacao button:hover {
+    filter: brightness(1.2);
 }
 
-/* =================================
-   LISTA DE ITENS (Tabela)
-   ================================= */
+/* --- TABELA DE ITENS --- */
 table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0;
-    background: #1E192B;
-    border-radius: 8px;
-    padding: 5px 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
-
-thead {
-    display: none;
+    border-spacing: 0 10px;
 }
 
 tr {
-    background-color: transparent;
-    border-bottom: 1px solid #44334f;
-    display: flex;
-    align-items: center;
-    padding: 15px 0;
-}
-
-tr:last-child {
-    border-bottom: none;
+    background: var(--glass-bg);
+    transition: 0.3s;
 }
 
 tr:hover {
-    background-color: rgba(173, 87, 230, 0.15); /* Roxo suave no hover */
-    border-radius: 8px;
-    transition: background-color 0.2s ease-in-out;
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(1.01);
 }
 
 td {
-    padding: 5px;
+    padding: 20px;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
     border: none;
-    color: #E1E1E6;
-    text-align: left;
 }
 
-/* Ajustes de colunas */
-td:first-child { flex-basis: 40px; }
-td:nth-child(2) { flex-grow: 1; }
-td:last-child { flex-basis: 40px; text-align: right; }
+td:first-child { border-left: 1px solid var(--glass-border); border-radius: 16px 0 0 16px; }
+td:last-child { border-right: 1px solid var(--glass-border); border-radius: 0 16px 16px 0; }
 
-/* Checkbox Personalizado */
-input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    background-color: transparent;
-    border: 2px solid #3A334F;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: grid;
-    place-content: center;
-    transition: all 0.2s;
-}
-
-input[type="checkbox"]:hover {
-    border-color: #8257E6;
-}
-
-input[type="checkbox"]::before {
-    content: '';
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    transform: scale(0);
-    transition: 120ms transform ease-in-out;
-    background: linear-gradient(135deg, #996DFF, #8257E6);
-}
-
-input[type="checkbox"]:checked {
-    border-color: #8257E6;
-}
-
-input[type="checkbox"]:checked::before {
-    transform: scale(1);
-}
-
-/* Item riscado */
-.riscado td:nth-child(2) {
-    text-decoration: line-through;
-    color: #7C7C8A;
-}
-
-/* Botão de Excluir */
 .delete-btn {
     color: #7C7C8A;
     font-size: 18px;
@@ -221,160 +174,138 @@ input[type="checkbox"]:checked::before {
 }
 
 .delete-btn:hover {
-    color: #F75A68; /* Vermelho para exclusão */
+    color: #F75A68; 
 }
 
-/* =================================
-   BOTÕES INFERIORES (Voltar, Sortear)
-   ================================= */
-.botoes-bottom {
+
+/* Checkbox Jakarta Style */
+input[type="checkbox"] {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--accent-purple);
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+}
+
+input[type="checkbox"]:checked {
+    background: var(--primary-purple);
+    border-color: var(--primary-purple);
+}
+
+input[type="checkbox"]:checked::after {
+    content: '✔';
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    left: 4px;
+    top: 0;
+}
+
+/* Nome e Info Icon */
+.nome-cell {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-top: 30px;
-    background: #1E192B;
-    padding: 15px 20px;
-    border-radius: 8px;
+    gap: 10px;
+    font-weight: 600;
 }
 
-.botoes-bottom button {
-    background-color: transparent;
-    color: #7C7C8A;
+.info-btn-inline {
+    color: var(--accent-purple);
+    background: none;
     border: none;
-    border-radius: 6px;
     cursor: pointer;
-    transition: color 0.3s;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 15px;
+    font-size: 1.1rem;
+    transition: 0.3s;
 }
 
-.botoes-bottom button:hover {
-    color: #FFFFFF;
+.info-btn-inline:hover { transform: rotate(15deg) scale(1.2); }
+
+.riscado span {
+    text-decoration: line-through;
+    color: var(--text-dim);
 }
 
-/* Botão de destaque para sortear */
-#sortear-indicacao {
-    background-color: #8257E6;
-    color: #FFFFFF;
-}
-
-#sortear-indicacao:hover {
-    background-color: #633BBC;
-    color: #FFFFFF;
-}
-
-/* =================================
-   ITEM SORTEADO
-   ================================= */
-.sorteado {
-    background-color: #8257E6 !important;
-    border-radius: 8px;
-    transition: background-color 0.5s ease;
-}
-
-.sorteado td {
-    color: #FFFFFF !important;
-}
-
-/* Overlay que escurece o fundo */
+/* --- MODAL (POP-UP) --- */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    inset: 0;
+    background: rgba(15, 12, 41, 0.95);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 
-/* Caixa do Modal */
 .modal-content {
-    background: var(--card-color);
-    padding: 30px;
-    border-radius: 20px;
+    background: #1a164d;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
     width: 90%;
     display: flex;
-    gap: 20px;
+    gap: 30px;
+    padding: 40px;
     position: relative;
-    box-shadow: 0 0 30px rgba(149, 112, 255, 0.3);
 }
 
 .modal-content img {
-    width: 20%;
-    border-radius: 10px;
+    width: 180px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .nota-badge {
-    background: #ffd700;
+    background: linear-gradient(135deg, #ffd700, #ffa500);
     color: #000;
-    padding: 2px 8px;
-    border-radius: 5px;
-    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.8rem;
     display: inline-block;
-    margin-bottom: 10px;
-}
-.modal-text p {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.6;
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
-.modal-text{
-    width: 80%;
-}
-
-.info-btn {
-    color: var(--accent-purple);
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-right: 10px;
+    margin-bottom: 15px;
 }
 
 .close-modal {
     position: absolute;
-    top: 10px;
-    right: 15px;
+    top: 20px;
+    right: 20px;
+    color: var(--text-dim);
     background: none;
     border: none;
-    color: white;
     font-size: 2rem;
     cursor: pointer;
 }
 
-.nome-cell {
+/* --- BOTÕES INFERIORES --- */
+.botoes-bottom {
     display: flex;
-    align-items: center;
-    gap: 8px; /* Espaço entre o nome e o 'i' */
+    justify-content: space-between;
+    margin-top: 30px;
 }
 
-.nome-cell span {
-    display: inline-block;
-}
-
-/* Ícone de Info ao lado do nome */
-.info-btn-inline {
-    background: none;
-    border: none;
-    padding: 0;
-    color: var(--accent-purple); /* Ou a cor secundária que você definiu */
+.botoes-bottom button {
+    padding: 15px 30px;
+    border-radius: 16px;
+    font-weight: 700;
     cursor: pointer;
-    font-size: 0.9rem; /* Um pouco menor que o texto para ficar elegante */
-    opacity: 0.7;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
+    transition: 0.3s;
 }
 
-.info-btn-inline:hover {
-    opacity: 1;
-    transform: scale(1.2);
+#sortear-indicacao {
+    background: var(--primary-purple);
+    color: white;
+    border: none;
+}
+
+.btn-voltar {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--glass-border);
+}
+
+.sorteado {
+    background: var(--primary-purple) !important;
+    border-color: var(--accent-purple) !important;
 }

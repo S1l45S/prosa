@@ -44,6 +44,13 @@ export default function Tabela({ categoria }) {
             const res = await api.get(`/detalhes-extras/${categoria}/${nome}`);
             setModalInfo({ ...res.data, nome: nome });
         } catch (error) {
+
+            console.log("STATUS:", error.response?.status);
+            console.log("DATA:", error.response?.data);
+            console.log("MESSAGE:", error.message);
+            res.status(500).json({
+                erro: "Erro ao buscar dados do livro"
+            });
             alert("Não foi possível encontrar detalhes deste Conteudo.");
         } finally {
             setCarregandoExtra(false);
@@ -56,7 +63,7 @@ export default function Tabela({ categoria }) {
 
         if (tamanho > 600) return '0.75rem';
         if (tamanho > 300) return '0.85rem';
-        return '1rem'; 
+        return '1rem';
     };
 
     return (
