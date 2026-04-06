@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 exports.cadastro = async (req, res) => {
     try {
         const user = await userService.criarUsuario(req.body);
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+        const token = jwt.sign({  id: user.id, nickName: user.nickName }, process.env.JWT_SECRET);
         res.json({ user, token });
     } catch (e) {
         if (e.message.includes("Email já está em uso")) {
@@ -19,7 +19,7 @@ exports.cadastro = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const user = await userService.login(req.body.email, req.body.senha);
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ id: user.id, nickName: user.nickName }, process.env.JWT_SECRET);
         res.json({ token, nome: user.nome });
 
     } catch (e) {

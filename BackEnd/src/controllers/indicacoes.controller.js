@@ -12,7 +12,7 @@ exports.listar = async (req, res) => {
 
 exports.criar = async (req, res) => {
     try {
-        const data = await service.criar(req.body, req.params.tipo);
+        const data = await service.criar(req.body);
         res.status(201).json(data);
     } catch (e) {
         res.status(500).json({ erro: e.message });
@@ -35,5 +35,14 @@ exports.detalhes = async (req, res) => {
         res.json(data);
     } catch {
         res.status(404).json({ erro: "Não encontrado" });
+    }
+};
+
+exports.top = async (req, res) => {
+    try {
+        const data = await service.getTop();
+        res.json(data);
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
     }
 };

@@ -2,23 +2,28 @@
 import { useState } from "react";
 import api from "../../services/api";
 import "./style.css"
-
+import { useAuth } from "@/src/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [text, setText] = useState("");
+    const { login } = useAuth();
+    const router = useRouter();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const res = await api.post('/auth/login', { email, senha });
-            localStorage.setItem('token', res.data.token);
-            window.location.href = '/';
+            login(res.data.token)
+            setTimeout(() => {
+                router.push("/");
+            }, 500);
         } catch (err) {
             const mensagem =
                 err.response?.data?.erro ||
-                "Erro ao cadastrar. Tente novamente.";
+                "Erro ao Logar. Tente novamente.";
             setText(mensagem);
         }
     };

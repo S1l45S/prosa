@@ -1,115 +1,115 @@
 "use client";
 import { useState, useEffect } from "react";
 import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
+
 export default function Tabela({ categoria }) {
+  const [indicacoes, setInd] = useState([]);
+  const [modalInfo, setModalInfo] = useState(null);
+  const [carregandoExtra, setCarregandoExtra] = useState(false);
+  const { user } = useAuth();
 
-    const [indicacoes, setInd] = useState([]);
-    const [modalInfo, setModalInfo] = useState(null);
-    const [carregandoExtra, setCarregandoExtra] = useState(false);
+  useEffect(() => {
+    if (!categoria || !user) return;
 
-    async function getInd() {
-        const indApi = await api.get(`/indicacoes/${categoria}`)
-        setInd(indApi.data)
-    }
-    useEffect(() => {
-        if (!categoria) return;
-        getInd()
-    }, [categoria])
-
-    async function checkAssistido(indicacao) {
-        const statusOriginal = indicacao.assistido;
-        const novoStatus = !statusOriginal;
-
-        setInd(prevInd =>
-            prevInd.map(item =>
-                item.id === indicacao.id ? { ...item, assistido: novoStatus } : item
-            )
+    async function fetchIndicacoes() {
+      try {
+        const response = await api.get(`/user/watchlist/${user.id}`);
+        const dados = response.data;
+        const filtrados = dados.filter(
+          (ind) => ind.tipo?.toLowerCase() === categoria.toLowerCase()
         );
-        try {
-            await api.put(`/indicacoes/${indicacao.id}`, { assistido: novoStatus });
-        } catch (error) {
-            console.error("Erro ao atualizar status:", error);
-            setInd(prevInd =>
-                prevInd.map(item =>
-                    item.id === indicacao.id ? { ...item, assistido: statusOriginal } : item
-                )
-            );
-            alert("Não foi possível salvar a alteração.");
-        }
+        setInd(filtrados);
+      } catch (error) {
+        console.error("Erro ao buscar indicações:", error);
+      }
     }
 
-    async function abrirDetalhes(nome) {
-        setCarregandoExtra(true);
-        try {
-            const res = await api.get(`/detalhes-extras/${categoria}/${nome}`);
-            setModalInfo({ ...res.data, nome: nome });
-        } catch (error) {
+    fetchIndicacoes();
+  }, [categoria, user]);
 
-            console.log("STATUS:", error.response?.status);
-            console.log("DATA:", error.response?.data);
-            console.log("MESSAGE:", error.message);
-            res.status(500).json({
-                erro: "Erro ao buscar dados do livro"
-            });
-            alert("Não foi possível encontrar detalhes deste Conteudo.");
-        } finally {
-            setCarregandoExtra(false);
-        }
+  async function checkAssistido(indicacao) {
+    const statusOriginal = indicacao.assistido;
+    const novoStatus = !statusOriginal;
+
+    // UI otimista
+    setInd((prev) =>
+      prev.map((item) =>
+        item.id === indicacao.id
+          ? { ...item, assistido: novoStatus }
+          : item
+      )
+    );
+
+    try {
+      await api.put(`/indicacoes/${indicacao.id}`, {
+        assistido: novoStatus,
+      });
+    } catch (error) {
+      console.error("Erro ao atualizar status:", error);
+
+      // rollback
+      setInd((prev) =>
+        prev.map((item) =>
+          item.id === indicacao.id
+            ? { ...item, assistido: statusOriginal }
+            : item
+        )
+      );
+
+      alert("Não foi possível salvar a alteração.");
     }
+  }
 
-    const getFontSize = (texto) => {
-        if (!texto) return '1rem';
-        const tamanho = texto.length;
+  function abrirDetalhes(nome) {
+    console.log("Buscar detalhes de:", nome);
+  }
 
-        if (tamanho > 600) return '0.75rem';
-        if (tamanho > 300) return '0.85rem';
-        return '1rem';
-    };
+  return (
+    <>
+      {indicacoes.length > 0 ? (
+        <table>
+          <tbody>
+            {indicacoes.map((indicacao) => (
+              <tr
+                key={indicacao.id}
+                className={indicacao.assistido ? "riscado" : ""}
+              >
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={indicacao.assistido}
+                    onChange={() => checkAssistido(indicacao)}
+                  />
+                </td>
 
-    return (
-        <>
-            <table>
-                <tbody>{indicacoes.map(indicacao => (
-                    <tr key={indicacao.id} className={indicacao.assistido ? 'riscado' : ''}>
-                        <td><input
-                            type="checkbox"
-                            checked={indicacao.assistido}
-                            onChange={() => checkAssistido(indicacao)}
-                        /></td>
-                        <td className="nome-cell">
-                            <span>{indicacao.nome}</span>
-                            <button
-                                className="info-btn-inline"
-                                onClick={() => abrirDetalhes(indicacao.nome)}
-                                disabled={carregandoExtra}
-                                title="Ver detalhes"
-                            >
-                                <i className="fas fa-info-circle"></i>
-                            </button>
-                        </td>
-                        <td>{indicacao.quem}</td>
-                        <td><button className="delete-btn"><i className="fas fa-trash"></i></button></td>
-                    </tr>
-                ))}</tbody>
-            </table>
-            {modalInfo && (
-                <div className="modal-overlay" onClick={() => setModalInfo(null)}>
-                    <div className="modal-content" onClick={e => e.stopPropagation()}>
-                        <button className="close-modal" onClick={() => setModalInfo(null)}>&times;</button>
+                <td className="nome-cell">
+                  <span>{indicacao.titulo}</span>
 
-                        {modalInfo.capa && <img src={modalInfo.capa} alt={modalInfo.nome} />}
+                  <button
+                    className="info-btn-inline"
+                    onClick={() => abrirDetalhes(indicacao.titulo)}
+                    disabled={carregandoExtra}
+                    title="Ver detalhes"
+                  >
+                    <i className="fas fa-info-circle"></i>
+                  </button>
+                </td>
 
-                        <div className="modal-text">
-                            <h2>{modalInfo.nome}</h2>
-                            <span className="nota-badge">⭐ {modalInfo.nota}</span>
-                            <p style={{ fontSize: getFontSize(modalInfo.sinopse) }}>
-                                {modalInfo.sinopse}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </>
+                <td>{indicacao.quem}</td>
 
-    )
+                <td>
+                  <button className="delete-btn">
+                    <i className="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <h2>WatchList VAZIA...</h2>
+      )}
+    </>
+  );
 }

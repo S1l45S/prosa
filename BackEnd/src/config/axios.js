@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const indApi = axios.create({
-    baseURL: `https://api.jsonbin.io/v3/b/${process.env.BIN_ID}`,
+    baseURL: `https://api.jsonbin.io/v3/b/${process.env.INDICACOES_BIN_ID}`,
     headers: { "X-Master-Key": process.env.MASTER_KEY }
 });
 

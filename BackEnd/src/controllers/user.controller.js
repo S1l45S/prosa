@@ -15,3 +15,14 @@ exports.adicionarWatchlist = async (req, res) => {
         res.status(500).json({ erro: e.message });
     }
 };
+
+exports.ListarWT = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const result = await userService.getFullWatchlist(userId);
+        res.json(result);
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
+    }
+
+}

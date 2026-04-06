@@ -1,5 +1,6 @@
 const axios = require("axios");
 
+
 exports.buscarDetalhes = async (categoria, nome) => {
     let url;
 
@@ -12,7 +13,6 @@ exports.buscarDetalhes = async (categoria, nome) => {
             return {
                 sinopse: livro.description || "Sinopse não disponível.",
                 capa: livro.imageLinks?.thumbnail || null,
-                nota: livro.averageRating || "N/A"
             };
         }
     } else if (categoria === "Filme" || categoria === "Série") {
@@ -27,7 +27,6 @@ exports.buscarDetalhes = async (categoria, nome) => {
             return {
                 sinopse: c.overview,
                 capa: c.poster_path ? `https://image.tmdb.org/t/p/w500${c.poster_path}` : null,
-                nota: c.vote_average
             };
         }
     }

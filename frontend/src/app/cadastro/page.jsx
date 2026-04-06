@@ -2,25 +2,30 @@
 import { useState } from "react";
 import api from "../../services/api";
 import "./style.css"
+import { useAuth } from "@/src/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Cadastro() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [nome, setnome] = useState('');
-    const [nickname, setnickname] = useState('');
+    const [nickName, setNickName] = useState('');
     const [text, setText] = useState("");
     const [tipo, setTipo] = useState("");
+    const router = useRouter();
+    const { login } = useAuth();
 
     const handleCadastro = async (e) => {
         e.preventDefault();
         try {
-            const res = await api.post('/auth/cadastro', { nome, nickname, email, senha, "watchlist": [] });
-            localStorage.setItem('token', res.data.token);
+            const res = await api.post('/auth/cadastro', { nome, nickName, email, senha, "watchlist": [] });
             setTipo("sucesso");
             setText("Cadastro realizado com sucesso!");
+            login(res.data.token)
             setTimeout(() => {
-                window.location.href = '/';
-            }, 500);
+                router.push("/");
+            }, 1000);
+
         } catch (err) {
             setTipo("erro");
             const mensagem =
@@ -58,7 +63,7 @@ export default function Cadastro() {
                         </div>
                         <div className="input-group">
                             <label>NickName</label>
-                            <input type="text" name="nickname" onChange={(e) => setnickname(e.target.value)} placeholder="nickname" required />
+                            <input type="text" name="nickName" onChange={(e) => setNickName(e.target.value)} placeholder="nickName" required />
                         </div>
                         <div className="input-group">
                             <label>E-mail</label>

@@ -10,8 +10,6 @@
     --text-dim: #b2bec3;
     --radius: 24px;
 }
-
-/* Reset essencial para ocupar a tela toda */
 * {
     box-sizing: border-box;
 }
@@ -21,8 +19,8 @@ body {
     background: var(--deep-bg);
     color: var(--text-main);
     min-height: 100vh;
-    margin: 0; /* Remove margens padrão */
-    padding: 0; /* Remove padding padrão */
+    margin: 0;
+    padding: 0; 
     overflow-x: hidden;
 }
 
@@ -30,21 +28,21 @@ body {
 .split-container {
     display: flex;
     min-height: 100vh;
-    width: 100vw; /* Força a largura total da viewport */
+    width: 100vw;
 }
 
 .form-section {
-    flex: 1; /* Ocupa metade da tela */
+    flex: 1; 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 60px; /* Aumentado para dar respiro em telas grandes */
+    padding: 60px; 
     background: radial-gradient(circle at center, #1a164d 0%, #0f0c29 100%);
 }
 
 .image-section {
-    flex: 1.2; /* Ocupa um pouco mais que a metade */
+    flex: 1.2; 
     background-size: cover;
     background-position: center;
     position: relative;
@@ -52,8 +50,6 @@ body {
     align-items: center;
     justify-content: center;
 }
-
-/* Overlay para a imagem não brigar com o formulário */
 .image-section::after {
     content: '';
     position: absolute;
@@ -64,7 +60,7 @@ body {
 /* --- COMPONENTES DE FORMULÁRIO --- */
 .glass-form {
     width: 100%;
-    max-width: 400px; /* Limita a largura interna para o formulário não ficar "esticado" demais */
+    max-width: 400px; 
     z-index: 1;
 }
 
@@ -133,7 +129,7 @@ body {
 /* Responsividade básica para celulares */
 @media (max-width: 768px) {
     .image-section {
-        display: none; /* Esconde a imagem em telas pequenas para focar no login */
+        display: none;
     }
     .form-section {
         flex: 1;

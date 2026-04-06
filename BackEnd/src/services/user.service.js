@@ -1,9 +1,10 @@
 const repo = require("../repositories/user.repository");
+const indicacaoService = require('./indicacoes.service');
 const bcrypt = require("bcryptjs");
 const crypto = require("node:crypto");
 
 exports.criarUsuario = async (user) => {
-    if (!user.nome || !user.email || !user.senha || !user.nickname) {
+    if (!user.nome || !user.email || !user.senha || !user.nickName) {
         throw new Error("Campos obrigatórios faltando.");
     }
 
@@ -36,13 +37,13 @@ exports.login = async (email, senha) => {
 
     const user = users.find(u => u.email === email);
 
-    if (!user){
+    if (!user) {
         throw new Error("Email não Cadastrado.");
     };
 
     const match = await bcrypt.compare(senha, user.senha);
 
-    if(!match){
+    if (!match) {
         throw new Error("Email ou Senha Incorretos.");
     }
     return user;
@@ -61,9 +62,16 @@ exports.adicionarWatchlist = async (userId, indId) => {
 
     const updated = users.map(u => {
         if (u.id === userId) {
-            if (!u.watchlist.some(i => i.id === indId)) {
-                u.watchlist.push(ind);
+            const iqual = u.watchlist.some(i => i.indID === indId)
+            if (iqual) { throw new Error("Item já adicionado.");}
+            const watchListItem =
+            {
+                "indID": ind.id,
+                "assitido": false,
+                "Data_adicao": new Date()
             }
+            u.watchlist.push(watchListItem);
+
             found = true;
         }
         return u;
@@ -74,3 +82,11 @@ exports.adicionarWatchlist = async (userId, indId) => {
     await repo.saveAll(updated);
     return true;
 };
+
+exports.getFullWatchlist = async (userId) => {
+    const user = await repo.findById(userId);
+    if (!user) throw new Error("Usuário não encontrado");
+    const watchlistIds = user.watchlist.map(item => item.indID);
+    const listaCompleta = await indicacaoService.getManyByIds(watchlistIds);
+    return listaCompleta;
+}
