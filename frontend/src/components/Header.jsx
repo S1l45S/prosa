@@ -12,6 +12,11 @@ export default function Header() {
   if (loading) return null;
   const isActive = (path) => pathname === path;
 
+  function logouting(){
+    logout();
+    router.push("/login")
+  }
+
 
   return (
     <>
@@ -50,7 +55,7 @@ export default function Header() {
           <button onClick={() => router.push(`/watchList/${user.id}`)} ><i className="fas fa-list"></i> Minha Watchlist</button>
           <div className="side-logout">
             <hr />
-            <Link href="/login">Sair</Link>
+            <button onClick={logouting}>Sair</button>
           </div>
         </nav>
       </div>

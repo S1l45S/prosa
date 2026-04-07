@@ -10,6 +10,7 @@ export default function Cadastro() {
     const [senha, setSenha] = useState('');
     const [nome, setnome] = useState('');
     const [nickName, setNickName] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [text, setText] = useState("");
     const [tipo, setTipo] = useState("");
     const router = useRouter();
@@ -17,7 +18,10 @@ export default function Cadastro() {
 
     const handleCadastro = async (e) => {
         e.preventDefault();
+        if (isLoading) return;
+        setIsLoading(true);
         try {
+            
             const res = await api.post('/auth/cadastro', { nome, nickName, email, senha, "watchlist": [] });
             setTipo("sucesso");
             setText("Cadastro realizado com sucesso!");
@@ -33,6 +37,8 @@ export default function Cadastro() {
                 "Erro ao cadastrar. Tente novamente.";
 
             setText(mensagem);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -76,7 +82,14 @@ export default function Cadastro() {
                             <label>Senha</label>
                             <input type="password" name="senha" onChange={(e) => setSenha(e.target.value)} placeholder="Crie uma senha forte" required />
                         </div>
-                        <button type="submit" className="btn-primary">Criar minha conta</button>
+                        <button
+                            type="submit"
+                            className="btn-primary"
+                            disabled={isLoading}
+                            style={{ opacity: isLoading ? 0.6 : 1, cursor: isLoading ? "not-allowed" : "pointer" }}
+                        >
+                            {isLoading ? "Criando..." : "Criar minha conta"}
+                        </button>
                     </form>
 
                     <p style={{ marginTop: "30px", color: "var(--text-dim)", textAlign: "center" }}>

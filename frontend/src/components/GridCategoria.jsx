@@ -8,14 +8,21 @@ export default function GridCategoria({ categoria }) {
 
     const [indicacoes, setInd] = useState([]);
     const [text, setText] = useState("")
+    const [isLoading, setIsLoading] = useState(false);
     const { getIndicacoes } = useApp();
     const router = useRouter();
     const { user } = useAuth()
 
     async function adicionarWT(userID, indID) {
+        if (isLoading) return
+        setIsLoading(true)
         try {
             await api.put(`user/watchlist/add/${userID}/${indID}`);
             setText("Adicionada a Watchlist")
+            window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
             setTimeout(() => {
                 setText('');
             }, 1000);
@@ -24,9 +31,16 @@ export default function GridCategoria({ categoria }) {
                 err.response?.data?.erro ||
                 "Erro ao cadastrar. Tente novamente.";
             setText(mensagem);
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
             setTimeout(() => {
                 setText('');
             }, 1000);
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -49,7 +63,11 @@ export default function GridCategoria({ categoria }) {
             <section className="cards-wrapper">
                 {indicacoes.map(item => (
                     <div key={item.id} className="item-card">
-                        <button className="add-to-watchlist" onClick={() => adicionarWT(user.id, item.id)}>
+                        <button className="add-to-watchlist"
+                            disabled={isLoading}
+                            style={{ opacity: isLoading ? 0.6 : 1, cursor: isLoading ? "auto" : "pointer" }}
+                            onClick={() => adicionarWT(user.id, item.id)}
+                        >
                             <i className="fas fa-plus"></i>
                         </button>
                         <div className="card-info" onClick={() => router.push(`/comunidade/${item.id}`)}>

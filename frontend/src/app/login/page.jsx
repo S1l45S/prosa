@@ -8,12 +8,15 @@ import { useRouter } from "next/navigation";
 export default function Login() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [text, setText] = useState("");
     const { login } = useAuth();
     const router = useRouter();
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        if (isLoading) return
+        setIsLoading(true);
         try {
             const res = await api.post('/auth/login', { email, senha });
             login(res.data.token)
@@ -25,6 +28,8 @@ export default function Login() {
                 err.response?.data?.erro ||
                 "Erro ao Logar. Tente novamente.";
             setText(mensagem);
+        }finally {
+            setIsLoading(false);
         }
     };
     return (
@@ -60,7 +65,14 @@ export default function Login() {
                                 setText("");
                             }} required placeholder="••••••••" />
                         </div>
-                        <button type="submit" className="btn-primary">Entrar</button>
+                        <button
+                            type="submit"
+                            className="btn-primary"
+                            disabled={isLoading}
+                            style={{ opacity: isLoading ? 0.6 : 1, cursor: isLoading ? "not-allowed" : "pointer" }}
+                        >
+                            {isLoading ? "Entrando..." : "Entrar"}
+                        </button>
                     </form>
 
                     <p style={{ marginTop: "30px", color: "var(--text-dim)", textAlign: "center" }}>
