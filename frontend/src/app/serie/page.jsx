@@ -1,14 +1,13 @@
-import Tabela from "@/src/components/Tabela";
-import"./style.css"
+import Header from "@/src/components/Header";
+import GridCategoria from "@/src/components/GridCategoria";
 export default function Serie() {
     return (
-        <div className="container">
-            <h1>🎬 Lista de Séries</h1>
-            <Tabela categoria= "Série"/>
-            <div className="botoes-bottom">
-                <a href="/"><button>Voltar</button></a>
-                <button id="sortear-indicacao">Sortear Indicação</button>
+        <>
+            <Header />
+            <div className="container">
+                <h1>🎬 Lista de Séries</h1>
+                <GridCategoria categoria="Série" />
             </div>
-        </div>
+        </>
     )
 }

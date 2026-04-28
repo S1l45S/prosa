@@ -8,7 +8,7 @@ exports.listarPorTipo = async (tipo) => {
 };
 
 exports.criar = async (novaInd) => {
-    if (!novaInd.titulo || !novaInd.quem || !novaInd.tipo || !novaInd.user_id || !novaInd.nota_comunidade) {
+    if (!novaInd.titulo || !novaInd.quem || !novaInd.tipo || !novaInd.user_id) {
         throw new Error("Campos obrigatórios faltando.");
     }
 

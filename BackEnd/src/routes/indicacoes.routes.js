@@ -4,7 +4,7 @@ const authMiddleware = require("../middlewares/auth.middleware");
 
 router.use(authMiddleware); 
 router.get("/:tipo", ctrl.listar);
-router.post("/:tipo", ctrl.criar);
+router.post("/criar", ctrl.criar);
 router.put("/:id", ctrl.atualizar);
 router.delete("/:id", ctrl.deletar);
 router.get("/detalhes/:categoria/:nome", ctrl.detalhes);
