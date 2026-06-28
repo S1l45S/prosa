@@ -8,6 +8,7 @@
   <img src="https://img.shields.io/badge/Next.js-16-black?logo=nextdotjs" alt="Next.js"/>
   <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black" alt="React"/>
   <img src="https://img.shields.io/badge/TailwindCSS-4-38B2AC?logo=tailwind-css&logoColor=white" alt="Tailwind CSS"/>
+  <img src="https://img.shields.io/badge/Node.js-LTS-339933?logo=nodedotjs&logoColor=white" alt="Node.js" />
   <img src="https://img.shields.io/badge/Express-5-black?logo=express" alt="Express"/>
   <img src="https://img.shields.io/badge/Licença-ISC-green" alt="ISC"/>
 </p>
