@@ -1,8 +1,5 @@
 <div align="center">
-
-<img src="public/logo.svg" alt="Logo PROSA" width="90"/>
-
-# 📚 PROSA
+# PROSA
 
 **Projeto Full Stack desenvolvido para conectar pessoas através do compartilhamento de recomendações de livros, filmes e séries em uma plataforma social moderna e colaborativa.**
 
@@ -11,8 +8,6 @@
   <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black" alt="React"/>
   <img src="https://img.shields.io/badge/TailwindCSS-4-38B2AC?logo=tailwind-css&logoColor=white" alt="Tailwind CSS"/>
   <img src="https://img.shields.io/badge/Express-5-black?logo=express" alt="Express"/>
-  <img src="https://img.shields.io/badge/JWT-Autenticação-orange" alt="JWT"/>
-  <img src="https://img.shields.io/badge/Axios-HTTP-5A29E4" alt="Axios"/>
   <img src="https://img.shields.io/badge/Licença-ISC-green" alt="ISC"/>
 </p>
 
