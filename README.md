@@ -1,5 +1,6 @@
 <div align="center">
-# PROSA
+
+#  PROSA
 
 **Projeto Full Stack desenvolvido para conectar pessoas através do compartilhamento de recomendações de livros, filmes e séries em uma plataforma social moderna e colaborativa.**
 
